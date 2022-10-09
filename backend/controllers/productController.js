@@ -32,7 +32,7 @@ exports.updateProduct = async(req,res,next)=>{
     let product = await productModel.findById(req.params.id)
 
     if(!product){
-        return next(new ErrorHander("Product not found", 404));
+        return next(new Error("Product not found", 404));
     }
 
     product = await productModel.findByIdAndUpdate(req.params.id,req.body,{
@@ -45,4 +45,24 @@ exports.updateProduct = async(req,res,next)=>{
         success:true,
         product
     })
+}
+
+
+/// Delete Product -- Admin 
+
+exports.deleteProduct = async (req,res,next)=>{
+    let product = await productModel.findById(req.params.id)
+
+    
+  if (!product) {
+    return next(new Error("Product not found", 404));
+  }
+
+
+   product =  await product.remove();
+
+  res.status(200).json({
+    success:true,
+    product
+})
 }
