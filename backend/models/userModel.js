@@ -21,7 +21,7 @@ const userSchema = mongoose.Schema({
         type : String,
         required : [true,"Please Enter Your Password "],
       
-        minLength:[8,"Name should have more then 4 charater"],
+        minLength:[8,"Name should have more then 8 charater"],
         select : false
     },
     avatar: {
@@ -47,5 +47,21 @@ const userSchema = mongoose.Schema({
   resetPasswordExpire: Date,
 })
 
+// here we use normal function because we use this here
+userSchema.pre("save",async function(next){
+    if(!this.isModified("password")){
+        next();
+    }
+
+    this.password = await bcrypt.hash(this.password,10)
+
+})
+
+//JWT TOKEN
+userSchema.methods.getJWTToken = function(){
+    return jwt.sign({id:this._id},process.env.JWT_SECRET,{
+        expiresIn: process.env.JWT_EXPIRE,
+    });
+};
 
 module.exports = mongoose.model("User", userSchema);
