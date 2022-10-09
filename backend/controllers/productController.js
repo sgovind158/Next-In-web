@@ -66,3 +66,20 @@ exports.deleteProduct = async (req,res,next)=>{
     product
 })
 }
+
+
+// Get Product  Single detail 
+
+exports.getProductDetails = async (req,res,next)=>{
+    let product = await productModel.findById(req.params.id)
+
+    
+  if (!product) {
+    return next(new Error("Product not found", 404));
+  }
+
+  res.status(200).json({
+    success:true,
+    product
+})
+}
