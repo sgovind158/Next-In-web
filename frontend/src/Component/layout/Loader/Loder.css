@@ -10,13 +10,13 @@
   }
 
   .loading > div {
-    width: 10vmax;
-    height: 10vmax;
-    border-bottom: 5px solid rgba(0, 0, 0, 0.719);
+    width: 15vmax;
+    height: 15vmax;
+    border-bottom: 10px solid rgba(0, 0, 0, 0.719);
   
-    border-radius: 50%;
+    border-radius: 70%;
   
-    animation: loadingRotate 800ms linear infinite;
+    animation: loadingRotate 1000ms linear infinite;
   }
 
   

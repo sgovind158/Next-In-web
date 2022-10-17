@@ -21,7 +21,8 @@ exports.createProduct = catchAsyncError(async(req,res,next)=>{
 // Get All Product
 exports.getAllProducts = catchAsyncError(  async(req, res, next) => {
     // console.log("get all products")
- const resultPerPage = 5;
+    // return next(new ErrorHandler("This is my temp Error",500))
+ const resultPerPage = 8;
  const productCount = await productModel.countDocuments();
     const apiFeatures = new ApiFeatures(productModel.find(),req.query).search().filter().pagination(resultPerPage)
     const products = await apiFeatures.query;
@@ -29,7 +30,7 @@ exports.getAllProducts = catchAsyncError(  async(req, res, next) => {
     res.status(200).json({
         success : true,
         products   ,
-       
+       productCount
     })
 });
 

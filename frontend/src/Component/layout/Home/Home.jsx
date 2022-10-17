@@ -4,7 +4,9 @@ import "../Home/Home.css"
 import MetaData from '../MetaData';
 import Product from './Product';
 import { useSelector, useDispatch } from "react-redux";
-import { getProduct } from '../../../Redux/Action/productAction';
+import { clearErrors, getProduct } from '../../../Redux/Action/productAction';
+import Loder from '../Loader/Loder';
+import { useAlert } from "react-alert";
 const productObj = {
     name :"Govind",
     _id : "1",
@@ -16,15 +18,26 @@ const productObj = {
 const Home = () => {
   const dispatch = useDispatch()
   const {loading,error,products} = useSelector((state)=>state.products)
-
-  console.log(products)
+const alert = useAlert()
+ 
+console.log(error)
   useEffect(()=>{
+   
+    if (error) {
+     return  alert.error(error);
+      // dispatch(clearErrors());
+    }
     dispatch(getProduct())
-  },[dispatch])
+  },[dispatch,error,alert])
   return (
     <>
-    
-    <MetaData title="NextIn-Computer" />
+    {
+      loading ?(
+        <Loder/>
+      )  : 
+      (
+        <>
+<MetaData title="NextIn-Computer" />
           <div className="banner">
             <p>Welcome to NextIn-Computer</p>
             <h1>FIND AMAZING PRODUCTS BELOW</h1>
@@ -47,6 +60,11 @@ const Home = () => {
        
           
           </div>
+ </>
+
+      )
+    }
+    
     </>
   )
 }

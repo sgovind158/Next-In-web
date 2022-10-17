@@ -22,3 +22,9 @@ export const getProduct = (keyword = "", currentPage = 1, price = [0, 25000], ca
     
     }
 }
+
+
+// Clearing Errors
+export const clearErrors = () => async (dispatch) => {
+    dispatch({ type: CLEAR_ERRORS });
+  };
