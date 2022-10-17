@@ -1,8 +1,10 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { CgMouse } from "react-icons/cg";
 import "../Home/Home.css"
 import MetaData from '../MetaData';
 import Product from './Product';
+import { useSelector, useDispatch } from "react-redux";
+import { getProduct } from '../../../Redux/Action/productAction';
 const productObj = {
     name :"Govind",
     _id : "1",
@@ -12,6 +14,13 @@ const productObj = {
 
 }
 const Home = () => {
+  const dispatch = useDispatch()
+  const {loading,error,products} = useSelector((state)=>state.products)
+
+  console.log(products)
+  useEffect(()=>{
+    dispatch(getProduct())
+  },[dispatch])
   return (
     <>
     
@@ -29,14 +38,14 @@ const Home = () => {
 
           <h2 className="homeHeading">Featured Products</h2>
           <div className="container" id="container">
-          <Product productObj = {productObj}/>
-          <Product productObj = {productObj}/>
-          <Product productObj = {productObj}/>
-          <Product productObj = {productObj}/>
-          <Product productObj = {productObj}/>
-          <Product productObj = {productObj}/>
-          <Product productObj = {productObj}/>
-          <Product productObj = {productObj}/>
+
+            {
+              products && products.map((el)=>(
+                <Product products = {el} key={el._id}/>
+              ))
+            }
+       
+          
           </div>
     </>
   )
