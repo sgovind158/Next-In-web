@@ -23,14 +23,14 @@ exports.getAllProducts = catchAsyncError(  async(req, res, next) => {
     // console.log("get all products")
     // return next(new ErrorHandler("This is my temp Error",500))
  const resultPerPage = 8;
- const productCount = await productModel.countDocuments();
+ const productsCount = await productModel.countDocuments();
     const apiFeatures = new ApiFeatures(productModel.find(),req.query).search().filter().pagination(resultPerPage)
     const products = await apiFeatures.query;
 
     res.status(200).json({
         success : true,
         products   ,
-       productCount
+       productsCount
     })
 });
 
@@ -92,7 +92,7 @@ exports.getProductDetails = catchAsyncError( async (req,res,next)=>{
   res.status(200).json({
     success:true,
     product,
-    productCount 
+  
 })
 })
 
